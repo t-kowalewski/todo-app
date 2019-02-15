@@ -12,8 +12,15 @@ loadEventListeners();
 function loadEventListeners() {
   // Add task event
   form.addEventListener('submit', addTask);
+  // Filter tasks event
+  filter.addEventListener('keyup', filterTasks);
+  // Remove task event
+  taskList.addEventListener('click', removeTask);
+  // Clear task list event
+  clearBtn.addEventListener('click', clearTasks);
 }
 
+// Add Task - Function
 function addTask(e) {
   if (taskInput.value === '') {
     alert('Enter your task');
@@ -46,6 +53,37 @@ function addTask(e) {
   }
 }
 
+// Remove Task - Function
+function removeTask(e) {
+  if (e.target.parentElement.classList.contains('delete-item')) {
+    if (confirm("Are You Sure?")) {
+      e.target.parentElement.parentElement.remove();
+    }
+  }
+}
 
 
+// Clear Tasks - Function
+function clearTasks() {
+  // taskList.innerHTML = '';
+  while (taskList.firstChild) {
+    // taskList.firstChild.remove();
+    taskList.removeChild(taskList.firstChild);
+  }
+}
 
+
+// Filter Tasks - Function
+function filterTasks(e) {
+  const textInp = e.target.value.toLowerCase();
+  
+  document.querySelectorAll('.collection-item').forEach(function (task) {
+    const taskCont = task.firstChild.textContent;
+    if (taskCont.toLowerCase().indexOf(textInp) != -1) {
+      task.style.display = 'block';
+    }
+    else {
+      task.style.display = 'none';
+    }
+  });
+}
