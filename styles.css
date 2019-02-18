@@ -1,0 +1,45 @@
+/* Color Palette - https://colorhunt.co/palette/118963 */
+
+/* General Styles */
+body {
+    background-color: #c4e3cb;
+    color: #616161;
+}
+
+.card {
+    background-color: #f4f9f4;
+}
+
+.card .card-title {
+    text-align: center;
+    font-weight: bold;
+    font-weight: 400;
+}
+
+input.btn {
+    margin-left: 0.75rem;
+}
+
+.collection .collection-item {
+    background-color: #f4f9f4;
+}
+
+.footer {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.footer a {
+    color: #616161;
+    text-decoration-line: underline;
+}
+
+/* FA icons */
+.fa-tasks {
+    position: relative;
+    right: 1rem;
+}
+
+.fa-check {
+    color: #8aae92;
+}
