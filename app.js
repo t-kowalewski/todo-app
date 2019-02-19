@@ -32,37 +32,40 @@ function getTasks() {
   }
   else {
     tasks = JSON.parse(localStorage.getItem('tasks'));
+
+    // Add tasks from LS
+    tasks.forEach(function (task) {
+      // Create li element
+      const li = document.createElement('li');
+      // Add class
+      li.className = 'collection-item';
+      // Create text node & append to li
+      li.appendChild(document.createTextNode(task));
+
+      // Create new link element (x icon)
+      const link = document.createElement('a');
+      // Add class
+      link.className = 'delete-item secondary-content';
+      // Add icon html
+      link.innerHTML = '<i class="fas fa-check"></i>';
+
+      // Append link to li
+      li.appendChild(link);
+
+      // Append li to the ul
+      taskList.appendChild(li);
+
+      // Activate "Clear" button //
+      clearBtn.classList.remove('disabled');
+    });
   }
-
-  // Add tasks from LS
-  tasks.forEach(function (task) {
-    // Create li element
-    const li = document.createElement('li');
-    // Add class
-    li.className = 'collection-item';
-    // Create text node & append to li
-    li.appendChild(document.createTextNode(task));
-
-    // Create new link element (x icon)
-    const link = document.createElement('a');
-    // Add class
-    link.className = 'delete-item secondary-content';
-    // Add icon html
-    link.innerHTML = '<i class="fas fa-check"></i>';
-
-    // Append link to li
-    li.appendChild(link);
-
-    // Append li to the ul
-    taskList.appendChild(li);
-  });
 }
 
 
 // Add Task - Function (UI)
 function addTask(e) {
   if (taskInput.value === '') {
-    alert('Enter your task');
+    alert('Please Enter Your Task');
   }
   else {
     // Create li element
@@ -91,6 +94,11 @@ function addTask(e) {
     // Clear input
     taskInput.value = '';
 
+    // Activate "Clear" button //
+    if (clearBtn.classList.contains('disabled')) {
+      clearBtn.classList.remove('disabled');
+    }
+
     e.preventDefault();
   }
 }
@@ -118,6 +126,12 @@ function removeTask(e) {
   if (e.target.parentElement.classList.contains('delete-item')) {
     if (confirm("Are You Sure?")) {
       e.target.parentElement.parentElement.remove();
+
+      // Disable "Clear" button //
+      if (taskList.firstChild === null) {
+        clearBtn.classList.add('disabled');
+      }
+
       // Remove task from LS
       removeTaskFromLS(e.target.parentElement.parentElement);
     }
@@ -153,6 +167,9 @@ function clearTasks() {
     // taskList.firstChild.remove();
     taskList.removeChild(taskList.firstChild);
   }
+
+  // Disable "Clear" button //
+  clearBtn.classList.add('disabled');
 
   // Clear from LS
   clearTasksFromLS();
